@@ -1,32 +1,47 @@
 # Crammr
 
-> Crack the entrance exam.
+AI-tutored entrance-exam prep (JEE · NEET · MCAT · CAT · Bar). Adaptive, exam-specific, works offline.
 
-AI-tutored prep for JEE, NEET, MCAT, CAT, and the bar. One subject at a time, one question at a time.
+**Status:** v0 skeleton — landing page + one adaptive-question route. Full AI not yet wired.
 
-## What it does
+**Landing:** https://crammr.vercel.app
 
-- **Exam-specific** — Every question is drawn from real past papers and verified syllabi.
-- **Adaptive practice** — The AI finds your weak spots and drills them until they are no longer weak.
-- **Pocket-sized** — Works offline. Perfect for metro commutes and weekend library sprints.
+---
 
-## Why
+## Stack
 
-Education. Part of a 20-product exploration of high-demand consumer and SMB markets.
+| Layer | Choice |
+|---|---|
+| Framework | Next.js 15 (App Router) |
+| Language | TypeScript (strict) |
+| Styling | Tailwind v4 |
+| Fonts | Inter via `next/font/google` |
+| Hosting | Vercel (zero config) |
+| Waitlist | https://waitlist-api-sigma.vercel.app |
 
-## Status
+## Run locally
 
-Landing page live. Product in planning.
+```bash
+pnpm install
+pnpm dev
+```
 
-- **Live**: https://mukundakatta.github.io/crammr/
+Open http://localhost:3000.
 
-## Stack (when built)
+## Deploy
 
-- Next.js 16 (App Router)
-- Supabase for auth + data
-- Stripe for payments
-- Deployed on Vercel
+Push to `main` — Vercel picks it up automatically. No environment variables required.
 
-## Local preview
+## Routes
 
-Just open `index.html` in a browser — it is a static landing page with the Tailwind CDN.
+| Route | Description |
+|---|---|
+| `/` | Landing page (original copy + design preserved) |
+| `/try` | v0 adaptive-question session — pick an exam, answer 3 questions, see score |
+| `/api/waitlist` | `POST { email }` → forwards to waitlist-api-sigma |
+
+## What's next
+
+- Wire real AI (question generation + rationale) behind `/try`
+- Offline support (PWA / service worker)
+- Auth + per-user progress tracking
