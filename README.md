@@ -1,47 +1,36 @@
-# Crammr
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-AI-tutored entrance-exam prep (JEE · NEET · MCAT · CAT · Bar). Adaptive, exam-specific, works offline.
+## Getting Started
 
-**Status:** v0 skeleton — landing page + one adaptive-question route. Full AI not yet wired.
-
-**Landing:** https://crammr.vercel.app
-
----
-
-## Stack
-
-| Layer | Choice |
-|---|---|
-| Framework | Next.js 15 (App Router) |
-| Language | TypeScript (strict) |
-| Styling | Tailwind v4 |
-| Fonts | Inter via `next/font/google` |
-| Hosting | Vercel (zero config) |
-| Waitlist | https://waitlist-api-sigma.vercel.app |
-
-## Run locally
+First, run the development server:
 
 ```bash
-pnpm install
+npm run dev
+# or
+yarn dev
+# or
 pnpm dev
+# or
+bun dev
 ```
 
-Open http://localhost:3000.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## Deploy
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-Push to `main` — Vercel picks it up automatically. No environment variables required.
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Routes
+## Learn More
 
-| Route | Description |
-|---|---|
-| `/` | Landing page (original copy + design preserved) |
-| `/try` | v0 adaptive-question session — pick an exam, answer 3 questions, see score |
-| `/api/waitlist` | `POST { email }` → forwards to waitlist-api-sigma |
+To learn more about Next.js, take a look at the following resources:
 
-## What's next
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-- Wire real AI (question generation + rationale) behind `/try`
-- Offline support (PWA / service worker)
-- Auth + per-user progress tracking
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+
+## Deploy on Vercel
+
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
