@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
-import { saveQuizResult, type UserStats } from "../../lib/storage";
+import type { UserStats } from "../../lib/storage";
 
 interface QuestionResult {
   id: number;
@@ -18,24 +18,17 @@ interface ResultData {
   questions: QuestionResult[];
   answers: (number | null)[];
   timeTaken: number;
+  stats?: UserStats;
 }
 
 export default function ResultsPage() {
-  const [data, setData] = useState<ResultData | null>(null);
-  const [stats, setStats] = useState<UserStats | null>(null);
-
-  useEffect(() => {
+  const [data] = useState<ResultData | null>(() => {
+    if (typeof window === "undefined") return null;
     const raw = sessionStorage.getItem("crammr_result");
-    if (!raw) return;
-    const parsed: ResultData = JSON.parse(raw);
-    setData(parsed);
-
-    const correct = parsed.questions.filter(
-      (q, i) => parsed.answers[i] === q.correct
-    ).length;
-    const s = saveQuizResult(correct, parsed.questions.length);
-    setStats(s);
-  }, []);
+    if (!raw) return null;
+    return JSON.parse(raw) as ResultData;
+  });
+  const stats = data?.stats ?? null;
 
   if (!data) {
     return (

@@ -1,7 +1,8 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useState } from "react";
 import { useRouter } from "next/navigation";
+import { saveQuizResult } from "../../lib/storage";
 import questionsData from "../../../data/questions.json";
 
 interface Question {
@@ -28,19 +29,16 @@ const QUIZ_SIZE = 10;
 
 export default function QuizPage() {
   const router = useRouter();
-  const [questions, setQuestions] = useState<Question[]>([]);
+  const [questions] = useState<Question[]>(() =>
+    shuffle(questionsData as Question[]).slice(0, QUIZ_SIZE)
+  );
   const [current, setCurrent] = useState(0);
   const [selected, setSelected] = useState<number | null>(null);
-  const [answers, setAnswers] = useState<(number | null)[]>([]);
+  const [answers, setAnswers] = useState<(number | null)[]>(() =>
+    new Array(QUIZ_SIZE).fill(null)
+  );
   const [startTime] = useState(() => Date.now());
-  const questionStartRef = useRef(Date.now());
   const [showFeedback, setShowFeedback] = useState(false);
-
-  useEffect(() => {
-    const picked = shuffle(questionsData as Question[]).slice(0, QUIZ_SIZE);
-    setQuestions(picked);
-    setAnswers(new Array(QUIZ_SIZE).fill(null));
-  }, []);
 
   const q = questions[current];
 
@@ -63,7 +61,6 @@ export default function QuizPage() {
       setCurrent((c) => c + 1);
       setSelected(null);
       setShowFeedback(false);
-      questionStartRef.current = Date.now();
     } else {
       const elapsed = Math.round((Date.now() - startTime) / 1000);
       const resultData = {
@@ -79,7 +76,11 @@ export default function QuizPage() {
         answers,
         timeTaken: elapsed,
       };
-      sessionStorage.setItem("crammr_result", JSON.stringify(resultData));
+      const correct = resultData.questions.filter(
+        (qq, i) => resultData.answers[i] === qq.correct
+      ).length;
+      const stats = saveQuizResult(correct, resultData.questions.length);
+      sessionStorage.setItem("crammr_result", JSON.stringify({ ...resultData, stats }));
       router.push("/results");
     }
   }, [current, startTime, questions, answers, router]);

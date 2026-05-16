@@ -7,10 +7,17 @@
 <meta name="description" content="AI-tutored prep for JEE, NEET, MCAT, CAT, and the bar. One subject at a time, one question at a time.">
 <meta property="og:title" content="Crammr — Crack the entrance exam.">
 <meta property="og:description" content="AI-tutored prep for JEE, NEET, MCAT, CAT, and the bar. One subject at a time, one question at a time.">
+<meta property="og:image" content="https://waitlist-api-sigma.vercel.app/api/og?title=Crammr&accent=red&category=Education">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://waitlist-api-sigma.vercel.app/api/og?title=Crammr&accent=red&category=Education">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2032%2032'%3E%3Ccircle%20cx%3D'16'%20cy%3D'16'%20r%3D'14'%20fill%3D'%23ef4444'%2F%3E%3C%2Fsvg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
+<script defer data-domain="crammr.vercel.app" src="https://plausible.io/js/script.js"></script>
 <style>
   body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
   * { -webkit-font-smoothing: antialiased; }
@@ -59,7 +66,7 @@
       Thanks. We will ping you the day we launch.
     </p>
     <p class="mt-6 text-xs text-neutral-400">
-      Join <span class="font-semibold text-neutral-700">1,284</span> people already on the waitlist
+      Early access list is open. First 100 get in free forever.
     </p>
   </div>
 </section>
@@ -212,6 +219,7 @@
       if (!email) return;
       form.style.display = 'none';
       thanks.classList.remove('hidden');
+      if (typeof plausible !== 'undefined') plausible('waitlist_signup', { props: { product: PRODUCT } });
       try {
         await fetch(WAITLIST_API, {
           method: 'POST',

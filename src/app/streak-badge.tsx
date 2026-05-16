@@ -1,27 +1,24 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { getStats } from "../lib/storage";
 
 export function StreakBadge() {
-  const [streak, setStreak] = useState(0);
-  const [best, setBest] = useState(0);
-
-  useEffect(() => {
+  const [{ streak, best }] = useState(() => {
     const stats = getStats();
     const today = new Date().toISOString().split("T")[0];
     const yesterday = new Date(Date.now() - 86400000)
       .toISOString()
       .split("T")[0];
 
-    if (
+    const currentStreak =
       stats.lastQuizDate === today ||
       stats.lastQuizDate === yesterday
-    ) {
-      setStreak(stats.streak);
-    }
-    setBest(stats.bestScore);
-  }, []);
+        ? stats.streak
+        : 0;
+
+    return { streak: currentStreak, best: stats.bestScore };
+  });
 
   if (streak === 0 && best === 0) return null;
 
